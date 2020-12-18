@@ -1,0 +1,7 @@
+---
+# tasks file for config
+
+- name: Push configuration to router.
+  edgeos_config:
+    backup: yes
+    src: config.boot

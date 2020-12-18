@@ -1,0 +1,12 @@
+---
+# tasks file for exporter
+
+download exporter
+
+install exporter
+
+add service file
+
+enable service
+
+verify port working
