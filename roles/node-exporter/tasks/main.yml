@@ -1,0 +1,27 @@
+---
+# tasks file for node-exporter
+
+- name: make directories
+  file:
+    path: "{{ node_binary_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: download node exporter
+  unarchive:
+    dest: "{{ node_binary_directory }}"
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-mipsle.tar.gz"
+    remote_src: yes
+    creates: "{{ node_binary_directory }}/node_exporter-{{ node_exporter_version }}.linux-mipsle"
+
+- name: install node exporter service
+  template:
+    src: node_exporter.service.j2
+    dest: /lib/systemd/system/node_exporter.service
+  notify: restart node exporter
+
+- name: enable node exporter service
+  service:
+    name: node_exporter
+    enabled: yes
+    state: started

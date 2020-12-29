@@ -1,0 +1,5 @@
+---
+# defaults file for node-exporter
+
+node_exporter_version: "1.0.1"
+node_binary_directory: "/usr/bin/node-exporter"

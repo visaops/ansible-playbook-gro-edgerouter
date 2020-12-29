@@ -1,0 +1,12 @@
+[Unit]
+Description=NodeExporter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart={{ node_binary_directory }}/node_exporter-{{ node_exporter_version }}.linux-mipsle/node_exporter --collector.systemd --collector.logind
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
