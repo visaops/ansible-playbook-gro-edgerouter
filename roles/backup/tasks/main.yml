@@ -1,0 +1,6 @@
+---
+# tasks file for config
+
+- name: backup existing config
+  community.network.edgeos_config:
+    backup: yes

@@ -6,4 +6,3 @@
   become_method: enable
   roles:
     - backup
-    - config
