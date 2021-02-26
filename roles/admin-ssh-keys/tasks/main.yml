@@ -1,0 +1,34 @@
+---
+# tasks file for admin-ssh-keys
+
+- name: create admin group
+  group:
+    name: admin
+    state: present
+
+- name: give passwordless sudo to admin group
+  lineinfile:
+    path: /etc/sudoers.d/admin
+    state: present
+    create: yes
+    line: '%ADMIN ALL=(ALL) NOPASSWD: ALL'
+
+- name: create user accounts
+  user:
+    name: "{{ item }}"
+    groups: admin
+    role: Admin
+  loop: "{{ users }}"
+
+- name: install ssh keys
+  authorized_key:
+    user: "{{ item }}"
+    state: present
+    key: "{{ lookup('file', './keys/{{ item }}.pub') }}"
+  loop: "{{ users }}"
+
+- name: disable removed accounts
+  user:
+    user: "{{ item }}"
+    state: absent
+  loop: "{{ disabled_users }}"
